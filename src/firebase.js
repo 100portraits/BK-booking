@@ -1,6 +1,7 @@
 // src/firebase.js
 
 import { initializeApp } from "firebase/app";
+import firebase from "firebase/compat/app";
 import { getFirestore, initializeFirestore } from "firebase/firestore";
 
 // Your environment variables from VSCODE
