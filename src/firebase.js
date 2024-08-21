@@ -30,7 +30,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app, 
-  { experimentalAutoDetectLongPolling: true }
+  { experimentalForceLongPolling: true }
 );
 
 export { db };
