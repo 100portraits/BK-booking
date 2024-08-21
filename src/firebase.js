@@ -17,13 +17,13 @@ import { getFirestore, initializeFirestore } from "firebase/firestore";
 
 // Your environment variables from Cloudflare Pages
 const firebaseConfig = {
-  apiKey: process.env.apiKey,
-  authDomain: process.env.authDomain,
-  projectId: process.env.projectId,
-  storageBucket: process.env.storageBucket,
-  messagingSenderId: process.env.messagingSenderId,
-  appId: process.env.appId,
-  measurementId: process.env.measurementId,
+  apiKey: context.env.apiKey,
+  authDomain: context.env.authDomain,
+  projectId: context.env.projectId,
+  storageBucket: context.env.storageBucket,
+  messagingSenderId: context.env.messagingSenderId,
+  appId: context.env.appId,
+  measurementId: context.env.measurementId
 };
 
 // Initialize Firebase
