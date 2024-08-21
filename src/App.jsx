@@ -39,13 +39,16 @@ const App = () => {
   }, [step]);
 
   return (
-    <div className="min-h-screen bg-red-300 overflow-hidden">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-red-300 overflow-hidden m-auto">
       <div
         ref={(el) => (stepRefs.current[0] = el)}
-        className={`flex justify-center items-center min-h-screen transition-opacity duration-500 ${step === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`flex justify-center items-center min-h-screen transition-opacity duration-500 m-auto ${
+          step === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
       >
         {step === 0 && <LandingScreen next={handleNextStep} />}
       </div>
+
       <div
         ref={(el) => (stepRefs.current[1] = el)}
         className={`flex justify-center items-center min-h-screen transition-opacity duration-500 ${step === 1 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
