@@ -1,4 +1,4 @@
-// Example: src/components/FirstScreen.jsx
+// src/components/FirstScreen.jsx
 
 import React from 'react';
 
