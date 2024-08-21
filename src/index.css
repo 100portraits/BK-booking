@@ -1,0 +1,42 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: var(--primary-light-red); /* Set background to light red */
+}
+
+.btn-primary {
+  @apply bg-primary-red text-white py-2 px-4 rounded hover:bg-primary-light-red;
+}
+
+/* Customize the slider handle */
+input[type="range"]::-webkit-slider-thumb {
+  background-color: #b71c1c; /* Red slider ball */
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+input[type="range"]::-moz-range-thumb {
+  background-color: #b71c1c; /* Red slider ball for Firefox */
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+input[type="range"]::-ms-thumb {
+  background-color: #b71c1c; /* Red slider ball for IE/Edge */
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+input[type="range"] {
+  accent-color: #b71c1c; /* For better slider appearance in some browsers */
+}
+
