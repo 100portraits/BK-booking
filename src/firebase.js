@@ -28,9 +28,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-firebase.firestore().settings({ experimentalAutoDetectLongPolling: true , merge: true });
 
-const db = initializeFirestore(app, 
+const db = getFirestore(app, 
   { experimentalAutoDetectLongPolling: true }
 );
 
