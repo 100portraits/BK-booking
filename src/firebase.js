@@ -17,13 +17,13 @@ import { getFirestore, initializeFirestore } from "firebase/firestore";
 
 // Your environment variables from Cloudflare Pages
 const firebaseConfig = {
-  apiKey: context.env.apiKey,
-  authDomain: context.env.authDomain,
-  projectId: context.env.projectId,
-  storageBucket: context.env.storageBucket,
-  messagingSenderId: context.env.messagingSenderId,
-  appId: context.env.appId,
-  measurementId: context.env.measurementId
+  apiKey: "AIzaSyC6MJHrgOkb7_6wRuERYD-CyQ_6HA1emOY",
+  authDomain: "bk-digitalisation.firebaseapp.com",
+  projectId: "bk-digitalisation",
+  storageBucket: "bk-digitalisation.appspot.com",
+  messagingSenderId: "871735118074",
+  appId: "1:871735118074:web:d5180aa4e1da262e902143",
+  measurementId: "G-GV7JDCZNLQ"
 };
 
 // Initialize Firebase
