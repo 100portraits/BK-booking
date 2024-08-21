@@ -28,9 +28,11 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+initializeFirestore(app, {
+  //experimentalForceLongPolling: true,
+  experimentalAutoDetectLongPolling: true
+});
 
-const db = getFirestore(app, 
-  { experimentalForceLongPolling: true }
-);
+const db = getFirestore();
 
 export { db };
