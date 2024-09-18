@@ -40,6 +40,7 @@ const SecondScreen = ({ next, selection }) => {
           </div>
         ))}
       </div>
+      
     </div>
   );
 };

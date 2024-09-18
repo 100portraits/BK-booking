@@ -51,38 +51,40 @@ const FourthScreen = ({ next, selection }) => {
   }, [selectedDate]);
 
   const handleBooking = async () => {
-    if (selectedDate && selectedTime) {
-      const selectedTimestamp = new Date(selectedTime);
-  
-      const updatedSelection = {
-        ...selection,
-        timestamp: selectedTimestamp,
-      };
-  
-      const newBooking = {
-        ...updatedSelection,
-      };
-  
-      const appointmentsRef = collection(db, 'appointments');
-      await addDoc(appointmentsRef, newBooking);
-  
-      const slotDocRef = query(
-        collection(db, 'availableSlots'),
-        where('timestamp', '==', Timestamp.fromDate(selectedTimestamp))
-      );
-  
-      const slotSnapshot = await getDocs(slotDocRef);
-      if (slotSnapshot.docs.length > 0) {
-        const slotDoc = slotSnapshot.docs[0];
-        await updateDoc(slotDoc.ref, { booked: true });
-      }
-  
-      next(updatedSelection); // Pass the updated selection including timestamp to the next screen
+    if (selectedDate && selectedTime.length > 0) {
+        const slotsToBook = selectedTime.map(time => new Date(time));
+
+        const updatedSelection = {
+            ...selection,
+            timestamp: slotsToBook[0], // Store the first selected timestamp in the selection object
+        };
+
+        const newBooking = {
+            ...updatedSelection,
+        };
+
+        const appointmentsRef = collection(db, 'appointments');
+        await addDoc(appointmentsRef, newBooking);
+
+        for (const selectedTimestamp of slotsToBook) {
+            const slotDocRef = query(
+                collection(db, 'availableSlots'),
+                where('timestamp', '==', Timestamp.fromDate(selectedTimestamp))
+            );
+
+            const slotSnapshot = await getDocs(slotDocRef);
+            if (slotSnapshot.docs.length > 0) {
+                const slotDoc = slotSnapshot.docs[0];
+                await updateDoc(slotDoc.ref, { booked: true });
+            }
+        }
+
+        next(updatedSelection); // Pass the updated selection including timestamp to the next screen
     } else {
-      alert("Please select a date and time.");
+        alert("Please select a date and time.");
     }
-  };
-  
+};
+
 
   const handleDateChange = (date) => {
     if (date) {
@@ -91,26 +93,51 @@ const FourthScreen = ({ next, selection }) => {
     }
   };
 
-  const handleTimeSelect = (time) => {
-    setSelectedTime(time);
-  };
+  const handleTimeSelect = (selectedSlot) => {
+    const selectedTimestamp = new Date(selectedSlot);
+    const estimatedTime = selection.estimatedTime || 30; // Fallback to 30 minutes if not specified
+    
+    const slotsToSelect = [selectedTimestamp.toISOString()];
+
+    if (estimatedTime > 30) {
+        const additionalSlots = Math.ceil(estimatedTime / 30) - 1;
+        for (let i = 1; i <= additionalSlots; i++) {
+            const additionalTimestamp = new Date(selectedTimestamp.getTime() + i * 30 * 60 * 1000);
+            slotsToSelect.push(additionalTimestamp.toISOString());
+        }
+    }
+
+    setSelectedTime(slotsToSelect);
+};
+
 
   const renderCalendarCell = (date) => {
     const jsDate = date.toDate(); // Convert the special date object to a JavaScript Date object
     const dayOfWeek = jsDate.getDay();
-    const isWeekendOrTuesday = dayOfWeek === 0 || dayOfWeek === 2 || dayOfWeek === 6;
+    const isWeekendOrTuesdayOrFriday = dayOfWeek === 0 || dayOfWeek === 2 || dayOfWeek === 5 || dayOfWeek === 6;
     const today = new Date().setHours(0, 0, 0, 0); // Normalize today to start of day
     const isPastDate = jsDate < today;
+
+    const handleClick = (e) => {
+        if (isWeekendOrTuesdayOrFriday || isPastDate) {
+            e.preventDefault(); // Prevent default action
+            e.stopPropagation(); // Stop the event from propagating
+            return;
+        }
+        // Proceed with the normal click handling if not disabled
+    };
 
     return (
       <CalendarCell
         date={date}
-        className={`w-12 h-12 outline-none cursor-default rounded-full flex items-center justify-center 
-          ${isWeekendOrTuesday || isPastDate ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'hover:bg-gray-100 pressed:bg-gray-200 selected:bg-red-700 selected:text-white focus-visible:ring ring-red-600/70 ring-offset-2'}`}
-        disabled={isWeekendOrTuesday || isPastDate}
+        onClick={handleClick}
+        className={`w-12 h-12 outline-none rounded-full flex items-center justify-center
+          ${isWeekendOrTuesdayOrFriday || isPastDate ? 'bg-gray-200 text-gray-400 pointer-events-none cursor-not-allowed' : 'hover:bg-gray-100 pressed:bg-gray-200 selected:bg-red-700 selected:text-white focus-visible:ring ring-red-600/70 ring-offset-2'}`}
       />
     );
-  };
+};
+
+
 
   return (
     <div className="bg-white p-10 rounded shadow-md text-center mb-8 w-full max-w-3xl">
@@ -154,18 +181,22 @@ const FourthScreen = ({ next, selection }) => {
           )}
 
           <div className="flex justify-center space-x-2">
-            {availableSlots.map((slot, index) => (
-              <button
-                key={index}
-                onClick={() => handleTimeSelect(slot.toISOString())}
-                className={`p-3 border rounded text-lg ${
-                  selectedTime === slot.toISOString() ? 'bg-red-700 text-white' : 'bg-gray-100 text-black'
-                }`}
-              >
-                {slot.getHours().toString().padStart(2, '0')}:{slot.getMinutes().toString().padStart(2, '0')}
-              </button>
-            ))}
+              {availableSlots.map((slot, index) => {
+                  const isSelected = selectedTime.includes(slot.toISOString());
+                  return (
+                      <button
+                          key={index}
+                          onClick={() => handleTimeSelect(slot.toISOString())}
+                          className={`p-3 border rounded text-lg ${
+                              isSelected ? 'bg-red-700 text-white' : 'bg-gray-100 text-black'
+                          }`}
+                      >
+                          {slot.getHours().toString().padStart(2, '0')}:{slot.getMinutes().toString().padStart(2, '0')}
+                      </button>
+                  );
+              })}
           </div>
+
         </div>
       )}
             <button onClick={handleBooking} className="btn-primary text-lg">Confirm Booking</button>

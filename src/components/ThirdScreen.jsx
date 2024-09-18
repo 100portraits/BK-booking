@@ -100,6 +100,7 @@ const ThirdScreen = ({ next, selection }) => {
       {errors.phone && <p className="text-red-500 w-full text-sm mb-4 -mt-4">{errors.phone}</p>}
 
       <button onClick={handleNext} className="btn-primary mt-6 text-lg">Next</button>
+      
     </div>
   );
 };
