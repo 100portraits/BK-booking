@@ -48,14 +48,14 @@ const decisionTreeConfig = {
             question: "Select Gears Category",
             options: {
               "Hub": {
-                question: "Does your hub have a chainguard?",
+                question: "Does your bike have a chainguard?",
                 options: {
                   "Chainguard": "summary",
                   "No Chainguard": "summary"
                 }
               },
               "Derailleur": {
-                question: "Does your derailleur have a chainguard?",
+                question: "Does your bike have a chainguard?",
                 options: {
                   "Chainguard": "summary",
                   "No Chainguard": "summary"
@@ -105,7 +105,7 @@ const decisionTreeConfig = {
             question: "Select Chain Type",
             options: {
               "Singlespeed": {
-                question: "Does your chain have a chainguard?",
+                question: "Does your bike have a chainguard?",
                 options: {
                   "Chainguard": "summary",
                   "No Chainguard": "summary"
@@ -118,7 +118,7 @@ const decisionTreeConfig = {
             question: "Select Gears Category",
             options: {
               "Hub": {
-                question: "Does your hub have a chainguard?",
+                question: "Does your bike have a chainguard?",
                 options: {
                   "Chainguard": "summary",
                   "No Chainguard": "summary"
