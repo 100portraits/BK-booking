@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AcceptanceScreen = () => {
   const [accepted, setAccepted] = useState(false);
-  const [experience, setExperience] = useState(5);
+  const [experience, setExperience] = useState(1);
   const navigate = useNavigate();
 
 
