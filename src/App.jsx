@@ -1,57 +1,29 @@
-import React, { useState } from 'react';
-import LandingScreen from './components/LandingScreen';
-import FirstScreen from './components/FirstScreen';
-import SecondScreen from './components/SecondScreen';
-import ThirdScreen from './components/ThirdScreen';
-import FourthScreen from './components/FourthScreen';
-import FifthScreen from './components/FifthScreen';
+// src/App.jsx
 
-const App = () => {
-  const [step, setStep] = useState(0);
-  const [selection, setSelection] = useState({
-    experience: 0,
-    bikeType: '',
-    serviceType: '',
-    estimatedTime: 0,
-    timestamp: '',
-    name: '',
-    email: '',
-    phone: ''
-  });
-
-  const handleNextStep = (newSelection) => {
-    setSelection({ ...selection, ...newSelection });
-    setStep(step + 1);
-  };
-
-  const handleBackStep = () => {
-    setStep(step - 1);
-  };
-
-  const renderPage = () => {
-    switch (step) {
-      case 0:
-        return <LandingScreen next={handleNextStep} />;
-      case 1:
-        return <FirstScreen next={handleNextStep} back={handleBackStep} />;
-      case 2:
-        return <SecondScreen next={handleNextStep} back={handleBackStep} selection={selection} />;
-      case 3:
-        return <ThirdScreen next={handleNextStep} back={handleBackStep} selection={selection} />;
-      case 4:
-        return <FourthScreen next={handleNextStep} back={handleBackStep} selection={selection} />;
-      case 5:
-        return <FifthScreen selection={selection} />;
-      default:
-        return <LandingScreen next={handleNextStep} />;
-    }
-  };
-
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AcceptanceScreen from './components/AcceptanceScreen';
+import BookingProcessScreen from './components/BookingProcessScreen';
+import UserInfoScreen from './components/UserInfoScreen';
+import CalendarScreen from './components/CalendarScreen';
+import ConfirmationScreen from './components/ConfirmationScreen';
+import AvailableSlots from './components/AvailableSlots';
+import ThankYouScreen from './components/ThankYouScreen';
+function App() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-red-300">
-      {renderPage()}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<AcceptanceScreen />} />
+        <Route path="/booking" element={<BookingProcessScreen />} />
+        <Route path="/userinfo" element={<UserInfoScreen />} />
+        <Route path="/calendar" element={<CalendarScreen />} />
+        <Route path="/timeslots" element={<AvailableSlots />} />
+        <Route path="/confirmation" element={<ConfirmationScreen />} />
+        <Route path="/thank-you" element={<ThankYouScreen />} />
+
+      </Routes>
+    </Router>
   );
-};
+}
 
 export default App;

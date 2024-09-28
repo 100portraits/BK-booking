@@ -1,22 +1,12 @@
-// tailwind.config.js
-
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-
-  ],
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
       colors: {
-        'primary-red': '#b71c1c', // Primary Red
-        'primary-light-red': '#f8d7da', // Light Red Background
-        'grey-background': '#f5f5f5', // Light Grey Background
+        primary: '#FF0000', // shades of red
+        secondary: '#0000FF', // blue accents
       },
     },
   },
-  plugins: [
-    require('tailwindcss-react-aria-components'),
-    require('tailwindcss-animate')
-  ]
-}
+  plugins: [],
+};
