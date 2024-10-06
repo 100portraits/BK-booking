@@ -33,7 +33,7 @@ const ThankYouScreen = () => {
         <p><strong>Time:</strong> {bookingDetails.selectedTime}</p>
         <p className="text-lg mt-4">With the new booking system, you are our <strong>{newSystemNumber}</strong> customer!</p>
         <p className="text-lg mb-4">You are our <strong>{totalCustomerNumber}</strong> total customer!</p>
-        <p className="text-lg mb-4">You've contributed to saving <strong>{wasteSaved}kg</strong> of waste!</p>
+         {/* <p className="text-lg mb-4">You've contributed to saving <strong>{wasteSaved}kg</strong> of waste!</p> */}
         <a href="https://bikekitchen.nl" className="text-red-600 underline" target="_blank" rel="noopener noreferrer">
           Visit Bike Kitchen Website
         </a>
