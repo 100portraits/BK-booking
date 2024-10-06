@@ -37,21 +37,38 @@ const BookingProcessScreen = () => {
     }
   };
 
+  const findTimeValue = (node) => {
+    if (node.time) return node.time;
+    if (node.options) {
+      for (let key in node.options) {
+        const time = findTimeValue(node.options[key]);
+        if (time) return time;
+      }
+    }
+    return null;
+  };
+
   const handleOptionClick = (optionKey) => {
     const selectedOption = currentNode.options[optionKey];
-    const newSelections = { ...selections, [currentNode.question]: optionKey };
+    const time = findTimeValue(selectedOption);
+    
+    const newSelections = { 
+      ...selections, 
+      [currentNode.question]: optionKey,
+      time: time || selections.time // Keep previous time if new time is not found
+    };
 
     setSelections(newSelections);
     sessionStorage.setItem('bookingSelection', JSON.stringify(newSelections));
 
     setHistory([...history, currentNode]);
 
-    if (typeof selectedOption === 'string' && selectedOption === 'summary') {
+    if (selectedOption.summary === "summary") {
       sessionStorage.setItem('bookingSelection', JSON.stringify(newSelections));
       sessionStorage.setItem('dontKnowSelected', dontKnowSelected);
       
       // Check for specific selections that require disclaimers
-      if (newSelections['Brake Type'] === 'Disc') {
+      if (newSelections['Select Brake Type'] === 'Disc') {
         navigate('/disc-brake-disclaimer');
       } else if (newSelections['What do you need help with?'] === 'Truing Wheel') {
         navigate('/wheel-truing-disclaimer');
@@ -106,6 +123,10 @@ const BookingProcessScreen = () => {
   };
 
   const renderCurrentStep = () => {
+    if (!currentNode) {
+      return <p>Loading...</p>;
+    }
+
     if (currentNode.input) {
       return (
         <>
@@ -139,8 +160,12 @@ const BookingProcessScreen = () => {
       <>
         <h2 className="text-2xl font-bold mb-4">{currentNode.question}</h2>
         <div className="space-y-2">
-          {Object.keys(currentNode.options).map((optionKey) => (
-            <OptionButton key={optionKey} onClick={() => handleOptionClick(optionKey)}>
+          {currentNode.options && Object.entries(currentNode.options).map(([optionKey, optionValue]) => (
+            <OptionButton 
+              key={optionKey} 
+              onClick={() => handleOptionClick(optionKey)}
+              time={optionValue.time}
+            >
               {optionKey}
             </OptionButton>
           ))}

@@ -12,8 +12,8 @@ const decisionTreeConfig = {
               "Front": {
                 question: "What do you need to repair?",
                 options: {
-                  "Inner Tube": "summary",
-                  "Outer Tire": "summary"
+                  "Inner Tube": { summary: "summary", time: 30 },
+                  "Outer Tire": { summary: "summary", time: 30 }
                 }
               },
               "Back": {
@@ -22,15 +22,15 @@ const decisionTreeConfig = {
                   "Inner Tube": {
                     question: "Does your bike have a chainguard?",
                     options: {
-                      "Chainguard": "summary",
-                      "No Chainguard": "summary"
+                      "Chainguard": { summary: "summary", time: 45 },
+                      "No Chainguard": { summary: "summary", time: 35 }
                     }
                   },
                   "Outer Tire": {
                     question: "Does your bike have a chainguard?",
                     options: {
-                      "Chainguard": "summary",
-                      "No Chainguard": "summary"
+                      "Chainguard": { summary: "summary", time: 45 },
+                      "No Chainguard": { summary: "summary", time: 35 }
                     }
                   }
                 }
@@ -43,22 +43,15 @@ const decisionTreeConfig = {
               "Tightening Chain": {
                 question: "Does your bike have a chainguard?",
                 options: {
-                  "Chainguard": "summary",
-                  "No Chainguard": "summary"
+                  "Chainguard": { summary: "summary", time: 30 },
+                  "No Chainguard": { summary: "summary", time: 20 }
                 }
               },
               "Replacing Chain": {
                 question: "Does your bike have a chainguard?",
                 options: {
-                  "Chainguard": "summary",
-                  "No Chainguard": "summary"
-                }
-              },
-              "Other Chain Issues": {
-                question: "Does your bike have a chainguard?",
-                options: {
-                  "Chainguard": "summary",
-                  "No Chainguard": "summary"
+                  "Chainguard": { summary: "summary", time: 40 },
+                  "No Chainguard": { summary: "summary", time: 30 }
                 }
               }
             }
@@ -71,32 +64,26 @@ const decisionTreeConfig = {
                 input: true,
                 placeholder: "e.g., Nexus 7, Nexus 3 (leave empty if unsure)",
                 options: {
-                  "Chainguard": "summary",
-                  "No Chainguard": "summary"
+                  "Chainguard": { summary: "summary", time: 55 },
+                  "No Chainguard": { summary: "summary", time: 45 }
                 }
               },
-              "Derailleur": {
-                question: "Does your bike have a chainguard?",
-                options: {
-                  "Chainguard": "summary",
-                  "No Chainguard": "summary"
-                }
-              }
+              "Derailleur": { summary: "summary", time: 40 }
             }
           },
           "Brakes": {
             question: "Select Brake Type",
             options: {
-              "Rim": "summary",
-              "Disc": "summary",
-              "Drum/Coaster": "summary"
+              "Rim": { summary: "summary", time: 30 },
+              "Disc": { summary: "summary", time: 45 },
+              "Drum/Coaster": { summary: "summary", time: 30 }
             }
           },
-          "Truing Wheel": "summary",
+          "Truing Wheel": { summary: "summary", time: 60 },
           "Other": {
             question: "Please describe your issue",
-            input: true, // Indicates that user needs to provide a comment
-            next: "summary"
+            input: true,
+            next: { summary: "summary", time: 45 }
           }
         }
       },
@@ -109,15 +96,27 @@ const decisionTreeConfig = {
               "Front": {
                 question: "What do you need to repair?",
                 options: {
-                  "Inner Tube": "summary",
-                  "Outer Tire": "summary"
+                  "Inner Tube (please bring your own)": { summary: "summary", time: 25 },
+                  "Outer Tire": { summary: "summary", time: 35 }
                 }
               },
               "Back": {
                 question: "What do you need to repair?",
                 options: {
-                  "Inner Tube": "summary",
-                  "Outer Tire": "summary"
+                  "Inner Tube": {
+                    question: "Does your bike have a chainguard?",
+                    options: {
+                      "Chainguard": { summary: "summary", time: 40 },
+                      "No Chainguard": { summary: "summary", time: 30 }
+                    }
+                  },
+                  "Outer Tire": {
+                    question: "Does your bike have a chainguard?",
+                    options: {
+                      "Chainguard": { summary: "summary", time: 40 },
+                      "No Chainguard": { summary: "summary", time: 30 }
+                    }
+                  }
                 }
               }
             }
@@ -126,42 +125,17 @@ const decisionTreeConfig = {
             question: "What do you need to do with the chain?",
             options: {
               "Tightening Chain": {
-                question: "Select Chain Type",
+                question: "Does your bike have a chainguard?",
                 options: {
-                  "Singlespeed": {
-                    question: "Does your bike have a chainguard?",
-                    options: {
-                      "Chainguard": "summary",
-                      "No Chainguard": "summary"
-                    }
-                  },
-                  "Derailleur": "summary"
+                  "Chainguard": { summary: "summary", time: 30 },
+                  "No Chainguard": { summary: "summary", time: 20 }
                 }
               },
               "Replacing Chain": {
-                question: "Select Chain Type",
+                question: "Does your bike have a chainguard?",
                 options: {
-                  "Singlespeed": {
-                    question: "Does your bike have a chainguard?",
-                    options: {
-                      "Chainguard": "summary",
-                      "No Chainguard": "summary"
-                    }
-                  },
-                  "Derailleur": "summary"
-                }
-              },
-              "Other Chain Issues": {
-                question: "Select Chain Type",
-                options: {
-                  "Singlespeed": {
-                    question: "Does your bike have a chainguard?",
-                    options: {
-                      "Chainguard": "summary",
-                      "No Chainguard": "summary"
-                    }
-                  },
-                  "Derailleur": "summary"
+                  "Chainguard": { summary: "summary", time: 45 },
+                  "No Chainguard": { summary: "summary", time: 35 }
                 }
               }
             }
@@ -170,34 +144,30 @@ const decisionTreeConfig = {
             question: "Select Gears Category",
             options: {
               "Hub": {
-                question: "Does your bike have a chainguard?",
+                question: "What type of hub gear does your bike have?",
+                input: true,
+                placeholder: "e.g., Nexus 7, Nexus 3 (leave empty if unsure)",
                 options: {
-                  "Chainguard": "summary",
-                  "No Chainguard": "summary"
+                  "Chainguard": { summary: "summary", time: 60 },
+                  "No Chainguard": { summary: "summary", time: 50 }
                 }
               },
-              "Derailleur": {
-                question: "Does your bike have a chainguard?",
-                options: {
-                  "Chainguard": "summary",
-                  "No Chainguard": "summary"
-                }
-              }
+              "Derailleur": { summary: "summary", time: 40 }
             }
           },
           "Brakes": {
             question: "Select Brake Type",
             options: {
-              "Rim": "summary",
-              "Disc": "summary",
-              "Drum/Coaster": "summary"
+              "Rim": { summary: "summary", time: 30 },
+              "Disc": { summary: "summary", time: 45 },
+              "Drum/Coaster": { summary: "summary", time: 30 }
             }
           },
-          "Truing Wheel": "summary",
+          "Truing Wheel": { summary: "summary", time: 60 },
           "Other": {
             question: "Please describe your issue",
             input: true,
-            next: "summary"
+            next: { summary: "summary", time: 45 }
           }
         }
       }

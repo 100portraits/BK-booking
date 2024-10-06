@@ -13,15 +13,16 @@ const CalendarScreen = () => {
   };
 
   const handleTimeSelect = (slot) => {
-    // Save selected date and time to sessionStorage without sending to Firestore yet
+    const bookingSelection = JSON.parse(sessionStorage.getItem('bookingSelection'));
+    
     const finalBooking = {
       selectedDate: slot.timestamp.toISOString(),
-      selectedTime: slot.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      selectedTime: `${slot.timestamp.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })} - ${slot.endTime.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`,
       slotId: slot.id,
+      time: bookingSelection.time
     };
     sessionStorage.setItem('finalBooking', JSON.stringify(finalBooking));
 
-    // Navigate to confirmation screen
     navigate('/confirmation');
   };
 

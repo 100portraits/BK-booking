@@ -1,10 +1,32 @@
 // src/components/ThankYouScreen.jsx
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import BookingCompletedScreen from './BookingCompletedScreen';
 
 const ThankYouScreen = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { customerNumber, wasteSaved, bookingDetails } = location.state || {};
+
+  useEffect(() => {
+    // Prevent going back
+    window.history.pushState(null, '', window.location.pathname);
+    window.addEventListener('popstate', onBackButtonEvent);
+
+    return () => {
+      window.removeEventListener('popstate', onBackButtonEvent);
+    };
+  }, []);
+
+  const onBackButtonEvent = (e) => {
+    e.preventDefault();
+    window.history.pushState(null, '', window.location.pathname);
+  };
+
+  // If booking details are missing, show the BookingCompletedScreen
+  if (!bookingDetails) {
+    return <BookingCompletedScreen />;
+  }
 
   const getOrdinalSuffix = (number) => {
     const j = number % 10,
@@ -31,9 +53,10 @@ const ThankYouScreen = () => {
         <p className="text-lg mb-4">Your appointment is confirmed for:</p>
         <p><strong>Date:</strong> {new Date(bookingDetails.selectedDate).toLocaleDateString()}</p>
         <p><strong>Time:</strong> {bookingDetails.selectedTime}</p>
+        <p><strong>Estimated repair time:</strong> {bookingDetails.time || 'Not specified'} minutes</p>
         <p className="text-lg mt-4">With the new booking system, you are our <strong>{newSystemNumber}</strong> customer!</p>
         <p className="text-lg mb-4">You are our <strong>{totalCustomerNumber}</strong> total customer!</p>
-         {/* <p className="text-lg mb-4">You've contributed to saving <strong>{wasteSaved}kg</strong> of waste!</p> */}
+        {/* <p className="text-lg mb-4">You've contributed to saving <strong>{wasteSaved}kg</strong> of waste!</p> */}
         <a href="https://bikekitchen.nl" className="text-red-600 underline" target="_blank" rel="noopener noreferrer">
           Visit Bike Kitchen Website
         </a>

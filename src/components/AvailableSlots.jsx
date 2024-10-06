@@ -17,7 +17,6 @@ const AvailableSlots = ({ selectedDate, onTimeSelect }) => {
           const endOfDay = new Date(selectedDate);
           endOfDay.setHours(23, 59, 59, 999);
           
-          // Query all slots for the day, regardless of booking status
           const q = query(
             collection(db, 'availableSlots'),
             where('timestamp', '>=', Timestamp.fromDate(startOfDay)),
@@ -30,10 +29,28 @@ const AvailableSlots = ({ selectedDate, onTimeSelect }) => {
             .map(slot => ({ ...slot, timestamp: slot.timestamp.toDate() }))
             .sort((a, b) => a.timestamp - b.timestamp);
 
-          const availableSlots = slots.filter(slot => !slot.booked);
-          
-          setAvailableSlots(availableSlots);
-          setAllBooked(slots.length > 0 && availableSlots.length === 0);
+          const bookingSelection = JSON.parse(sessionStorage.getItem('bookingSelection'));
+          const requiredSlots = Math.ceil(bookingSelection.time / 30);
+
+          const availableConsecutiveSlots = [];
+          for (let i = 0; i < slots.length - requiredSlots + 1; i++) {
+            let consecutive = true;
+            for (let j = 0; j < requiredSlots; j++) {
+              if (slots[i + j].booked) {
+                consecutive = false;
+                break;
+              }
+            }
+            if (consecutive) {
+              availableConsecutiveSlots.push({
+                ...slots[i],
+                endTime: new Date(slots[i].timestamp.getTime() + requiredSlots * 30 * 60000)
+              });
+            }
+          }
+
+          setAvailableSlots(availableConsecutiveSlots);
+          setAllBooked(slots.length > 0 && availableConsecutiveSlots.length === 0);
           setError('');
         } catch (error) {
           console.error("Error fetching available slots: ", error);
@@ -61,7 +78,8 @@ const AvailableSlots = ({ selectedDate, onTimeSelect }) => {
               onClick={() => handleTimeClick(slot)}
               className="px-4 py-2 bg-green-100 hover:bg-green-200 rounded"
             >
-              {slot.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              {slot.timestamp.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })} - 
+              {slot.endTime.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
             </button>
           ))}
         </div>

@@ -1,6 +1,6 @@
 // src/components/ConfirmationScreen.jsx
 import React, { useState, useEffect } from 'react';
-import { collection, addDoc, Timestamp, updateDoc, doc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, Timestamp, updateDoc, doc, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,8 +12,9 @@ const ConfirmationScreen = () => {
   
   useEffect(() => {
     const finalBooking = JSON.parse(sessionStorage.getItem('finalBooking'));
-    setBookingDetails(finalBooking);
-    console.log('Booking details:', finalBooking);
+    const bookingSelection = JSON.parse(sessionStorage.getItem('bookingSelection'));
+    setBookingDetails({...finalBooking, time: bookingSelection.time});
+    console.log('Booking details:', {...finalBooking, time: bookingSelection.time});
   }, []);
 
   const handleConfirm = async () => {
@@ -41,6 +42,7 @@ const ConfirmationScreen = () => {
         additionalMessage,
         customerNumber,
         wasteSaved,
+        estimatedTime: bookingDetails.time || 'Not specified', // Use bookingDetails.time here
       };
 
       const docRef = await addDoc(appointmentsRef, bookingData);
@@ -58,6 +60,7 @@ Thank you for booking an appointment with the Bike Kitchen!
 Your booking details:
 Date: ${new Date(bookingDetails.selectedDate).toLocaleDateString()}
 Time: ${bookingDetails.selectedTime}
+Estimated repair time: ${bookingDetails.time || 'Not specified'} minutes
 
 We're excited to help you with your bike and contribute to a more sustainable future. Remember, the Bike Kitchen is all about empowering you to repair and maintain your own bicycle, reducing waste and promoting self-sufficiency.
 
@@ -74,6 +77,7 @@ The Bike Kitchen Team`,
 <ul>
   <li><strong>Date:</strong> ${new Date(bookingDetails.selectedDate).toLocaleDateString()}</li>
   <li><strong>Time:</strong> ${bookingDetails.selectedTime}</li>
+  <li><strong>Estimated repair time:</strong> ${bookingDetails.time || 'Not specified'} minutes</li>
 </ul>
 
 <p>We're excited to help you with your bike and contribute to a more sustainable future. Remember, the Bike Kitchen is all about empowering you to repair and maintain your own bicycle, reducing waste and promoting self-sufficiency.</p>
@@ -86,12 +90,28 @@ The Bike Kitchen Team`,
         }
       });
 
-      // Update the availableSlots collection to mark the slot as booked
-      const slotRef = doc(db, 'availableSlots', bookingDetails.slotId);
-      await updateDoc(slotRef, { booked: true });
+      // Update the availableSlots collection to mark the slots as booked
+      const startTime = new Date(bookingDetails.selectedDate);
+      const endTime = new Date(startTime.getTime() + (bookingDetails.time * 60000)); // Convert minutes to milliseconds
+
+      const slotsQuery = query(
+        collection(db, 'availableSlots'),
+        where('timestamp', '>=', Timestamp.fromDate(startTime)),
+        where('timestamp', '<', Timestamp.fromDate(endTime))
+      );
+
+      const slotsSnapshot = await getDocs(slotsQuery);
+      const updatePromises = slotsSnapshot.docs.map(slotDoc => 
+        updateDoc(doc(db, 'availableSlots', slotDoc.id), { booked: true })
+      );
+
+      await Promise.all(updatePromises);
+
+      // Clear session storage
+      sessionStorage.clear();
 
       // Navigate to final screen with thank you message
-      navigate('/thank-you', { state: { customerNumber, wasteSaved, bookingDetails } });
+      navigate('/thank-you', { state: { customerNumber, wasteSaved, bookingDetails }, replace: true });
 
     } catch (error) {
       console.error('Error confirming appointment:', error);
@@ -111,6 +131,7 @@ The Bike Kitchen Team`,
       <div className="text-left w-full max-w-md bg-gray-100 p-4 rounded mb-4">
         <p><strong>Date:</strong> {new Date(bookingDetails.selectedDate).toLocaleDateString()}</p>
         <p><strong>Time:</strong> {bookingDetails.selectedTime}</p>
+        <p><strong>Estimated repair time:</strong> {bookingDetails.time || 'Not specified'} minutes</p>
       </div>
       <textarea
         placeholder="Additional questions or messages"
