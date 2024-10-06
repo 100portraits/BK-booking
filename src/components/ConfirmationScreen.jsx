@@ -13,6 +13,7 @@ const ConfirmationScreen = () => {
   useEffect(() => {
     const finalBooking = JSON.parse(sessionStorage.getItem('finalBooking'));
     setBookingDetails(finalBooking);
+    console.log('Booking details:', finalBooking);
   }, []);
 
   const handleConfirm = async () => {
@@ -28,11 +29,13 @@ const ConfirmationScreen = () => {
       // Add the booking data to Firestore
       const appointmentsRef = collection(db, 'appointments');
       const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+      const bookingSelection = JSON.parse(sessionStorage.getItem('bookingSelection'));
       const experience = sessionStorage.getItem('experience');
 
       const bookingData = {
         ...bookingDetails,
         userInfo,
+        bookingSelection,
         experience,
         timestamp: Timestamp.fromDate(new Date(bookingDetails.selectedDate)),
         additionalMessage,
@@ -40,7 +43,48 @@ const ConfirmationScreen = () => {
         wasteSaved,
       };
 
-      await addDoc(appointmentsRef, bookingData);
+      const docRef = await addDoc(appointmentsRef, bookingData);
+
+      // Create a separate document in the 'mail' collection for the email
+      const mailRef = collection(db, 'mail');
+      await addDoc(mailRef, {
+        to: userInfo.email,
+        message: {
+          subject: "Thank you for your Bike Kitchen booking!",
+          text: `Dear ${userInfo.name},
+
+Thank you for booking an appointment with the Bike Kitchen!
+
+Your booking details:
+Date: ${new Date(bookingDetails.selectedDate).toLocaleDateString()}
+Time: ${bookingDetails.selectedTime}
+
+We're excited to help you with your bike and contribute to a more sustainable future. Remember, the Bike Kitchen is all about empowering you to repair and maintain your own bicycle, reducing waste and promoting self-sufficiency.
+
+If you have any questions before your appointment, please don't hesitate to reach out.
+
+See you soon!
+
+The Bike Kitchen Team`,
+          html: `<p>Dear ${userInfo.name},</p>
+
+<p>Thank you for booking an appointment with the Bike Kitchen!</p>
+
+<h3>Your booking details:</h3>
+<ul>
+  <li><strong>Date:</strong> ${new Date(bookingDetails.selectedDate).toLocaleDateString()}</li>
+  <li><strong>Time:</strong> ${bookingDetails.selectedTime}</li>
+</ul>
+
+<p>We're excited to help you with your bike and contribute to a more sustainable future. Remember, the Bike Kitchen is all about empowering you to repair and maintain your own bicycle, reducing waste and promoting self-sufficiency.</p>
+
+<p>If you have any questions before your appointment, please don't hesitate to reach out.</p>
+
+<p>See you soon!</p>
+
+<p>The Bike Kitchen Team</p>`
+        }
+      });
 
       // Update the availableSlots collection to mark the slot as booked
       const slotRef = doc(db, 'availableSlots', bookingDetails.slotId);

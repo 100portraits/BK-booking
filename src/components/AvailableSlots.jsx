@@ -6,6 +6,7 @@ import { db } from '../firebase';
 const AvailableSlots = ({ selectedDate, onTimeSelect }) => {
   const [availableSlots, setAvailableSlots] = useState([]);
   const [error, setError] = useState('');
+  const [allBooked, setAllBooked] = useState(false);
 
   useEffect(() => {
     const fetchAvailableSlots = async () => {
@@ -15,20 +16,24 @@ const AvailableSlots = ({ selectedDate, onTimeSelect }) => {
           startOfDay.setHours(0, 0, 0, 0);
           const endOfDay = new Date(selectedDate);
           endOfDay.setHours(23, 59, 59, 999);
+          
+          // Query all slots for the day, regardless of booking status
           const q = query(
             collection(db, 'availableSlots'),
             where('timestamp', '>=', Timestamp.fromDate(startOfDay)),
-            where('timestamp', '<=', Timestamp.fromDate(endOfDay)),
-            where('booked', '==', false)
+            where('timestamp', '<=', Timestamp.fromDate(endOfDay))
           );
           const querySnapshot = await getDocs(q);
 
           const slots = querySnapshot.docs
             .map(doc => ({ id: doc.id, ...doc.data() }))
             .map(slot => ({ ...slot, timestamp: slot.timestamp.toDate() }))
-            .sort((a, b) => a.timestamp - b.timestamp); // Sort slots chronologically
+            .sort((a, b) => a.timestamp - b.timestamp);
 
-          setAvailableSlots(slots);
+          const availableSlots = slots.filter(slot => !slot.booked);
+          
+          setAvailableSlots(availableSlots);
+          setAllBooked(slots.length > 0 && availableSlots.length === 0);
           setError('');
         } catch (error) {
           console.error("Error fetching available slots: ", error);
@@ -61,7 +66,11 @@ const AvailableSlots = ({ selectedDate, onTimeSelect }) => {
           ))}
         </div>
       ) : (
-        <p className="text-gray-600">No available time slots for this date.</p>
+        <p className="text-gray-600">
+          {allBooked 
+            ? "All time slots on this date are booked." 
+            : "No available time slots for this date."}
+        </p>
       )}
     </div>
   );

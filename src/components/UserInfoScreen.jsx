@@ -22,7 +22,15 @@ const UserInfoScreen = () => {
     }
 
     sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
-    navigate('/calendar');
+
+    // Check if "Don't know" was selected during the booking process
+    const dontKnowSelected = sessionStorage.getItem('dontKnowSelected') === 'true';
+
+    if (dontKnowSelected) {
+      navigate('/disclaimer');
+    } else {
+      navigate('/calendar');
+    }
   };
 
   return (
