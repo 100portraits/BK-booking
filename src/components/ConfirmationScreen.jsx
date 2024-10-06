@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, addDoc, Timestamp, updateDoc, doc, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid'; // Make sure to install this package
 
 const ConfirmationScreen = () => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const ConfirmationScreen = () => {
       const bookingSelection = JSON.parse(sessionStorage.getItem('bookingSelection'));
       const experience = sessionStorage.getItem('experience');
 
+      const cancellationToken = uuidv4();
       const bookingData = {
         ...bookingDetails,
         userInfo,
@@ -43,9 +45,13 @@ const ConfirmationScreen = () => {
         customerNumber,
         wasteSaved,
         estimatedTime: bookingDetails.time || 'Not specified', // Use bookingDetails.time here
+        cancellationToken, // Add this line
       };
 
       const docRef = await addDoc(appointmentsRef, bookingData);
+
+      // Create the cancellation link
+      const cancellationLink = `https://bikekitchen.nl/cancel-booking/${cancellationToken}`;
 
       // Create a separate document in the 'mail' collection for the email
       const mailRef = collection(db, 'mail');
@@ -64,6 +70,8 @@ Estimated repair time: ${bookingDetails.time || 'Not specified'} minutes
 
 We're excited to help you with your bike and contribute to a more sustainable future. Remember, the Bike Kitchen is all about empowering you to repair and maintain your own bicycle, reducing waste and promoting self-sufficiency.
 
+If you need to cancel your appointment, please use this link: ${cancellationLink}
+
 If you have any questions before your appointment, please don't hesitate to reach out.
 
 See you soon!
@@ -81,6 +89,8 @@ The Bike Kitchen Team`,
 </ul>
 
 <p>We're excited to help you with your bike and contribute to a more sustainable future. Remember, the Bike Kitchen is all about empowering you to repair and maintain your own bicycle, reducing waste and promoting self-sufficiency.</p>
+
+<p>If you need to cancel your appointment, please <a href="${cancellationLink}">click here</a>.</p>
 
 <p>If you have any questions before your appointment, please don't hesitate to reach out.</p>
 

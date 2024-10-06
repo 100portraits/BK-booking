@@ -13,6 +13,7 @@ import DisclaimerScreen from './components/DisclaimerScreen'; // Add this import
 import DiscBrakeDisclaimerScreen from './components/DiscBrakeDisclaimerScreen';
 import WheelTruingDisclaimerScreen from './components/WheelTruingDisclaimerScreen';
 import BookingCompletedScreen from './components/BookingCompletedScreen';
+import CancelBookingScreen from './components/CancelBookingScreen'; // Add this import
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/booking-completed" element={<BookingCompletedScreen />} />
         <Route path="/disc-brake-disclaimer" element={<DiscBrakeDisclaimerScreen />} />
         <Route path="/wheel-truing-disclaimer" element={<WheelTruingDisclaimerScreen />} />
+        <Route path="/cancel-booking/:token" element={<CancelBookingScreen />} />
         <Route path="*" element={<Navigate to="/booking-completed" replace />} />
       </Routes>
     </Router>
