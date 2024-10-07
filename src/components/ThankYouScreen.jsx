@@ -65,7 +65,7 @@ const ThankYouScreen = () => {
           <p className="mb-2">Interested in joining the Bike Kitchen community?</p>
           <p>Join us for monthly borrels, rideouts, workshops and other fun stuff!</p>
           <a 
-            href="https://chat.whatsapp.com/DZwW84wiDGJ6hmTx1rHm8j" 
+            href="https://doneren.auf.nl/bike-kitchen" 
             target="_blank" 
             rel="noopener noreferrer"
             className="inline-block mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"

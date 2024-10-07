@@ -76,7 +76,7 @@ If you need to cancel your appointment, please use this link: ${cancellationLink
 
 For further questions: you can send an email to bikekitchenuva@gmail.com or reply to this mail.
 
-If you're interested in joining the Bike Kitchen community for monthly borrels, rideouts, workshops and other fun stuff, join our WhatsApp chat: https://chat.whatsapp.com/DZwW84wiDGJ6hmTx1rHm8j
+If you're interested in joining the Bike Kitchen community for monthly borrels, rideouts, workshops and other fun stuff, join our WhatsApp chat: https://doneren.auf.nl/bike-kitchen
 
 See you soon!
 
@@ -100,7 +100,7 @@ The Bike Kitchen UvA Team`,
 
 <p>For further questions: you can send an email to <a href="mailto:bikekitchenuva@gmail.com">bikekitchenuva@gmail.com</a> or reply to this mail.</p>
 
-<p>If you're interested in joining the Bike Kitchen community for monthly borrels, rideouts, workshops and other fun stuff, <a href="https://chat.whatsapp.com/DZwW84wiDGJ6hmTx1rHm8j">join our WhatsApp chat</a>.</p>
+<p>If you're interested in joining the Bike Kitchen community for monthly borrels, rideouts, workshops and other fun stuff, <a href="https://doneren.auf.nl/bike-kitchen">join our community</a>.</p>
 
 <p>See you soon!</p>
 
