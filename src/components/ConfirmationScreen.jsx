@@ -58,28 +58,32 @@ const ConfirmationScreen = () => {
       await addDoc(mailRef, {
         to: userInfo.email,
         message: {
-          subject: "Thank you for your Bike Kitchen booking!",
+          subject: "Thank you for your Bike Kitchen UvA booking!",
           text: `Dear ${userInfo.name},
 
-Thank you for booking an appointment with the Bike Kitchen!
+Thank you for booking an appointment with the Bike Kitchen UvA!
 
 Your booking details:
 Date: ${new Date(bookingDetails.selectedDate).toLocaleDateString()}
 Time: ${bookingDetails.selectedTime}
 Estimated repair time: ${bookingDetails.time || 'Not specified'} minutes
 
-We're excited to help you with your bike and contribute to a more sustainable future. Remember, the Bike Kitchen is all about empowering you to repair and maintain your own bicycle, reducing waste and promoting self-sufficiency.
+We're excited to help you with your bike and contribute to a more sustainable future. Remember, the Bike Kitchen UvA is all about empowering you to repair and maintain your own bicycle, reducing waste and promoting self-sufficiency.
+
+NB: If you want to replace something on your bike, you have to bring your own parts in advance.
 
 If you need to cancel your appointment, please use this link: ${cancellationLink}
 
-If you have any questions before your appointment, please don't hesitate to reach out.
+For further questions: you can send an email to bikekitchenuva@gmail.com or reply to this mail.
+
+If you're interested in joining the Bike Kitchen community for monthly borrels, rideouts, workshops and other fun stuff, join our WhatsApp chat: https://chat.whatsapp.com/DZwW84wiDGJ6hmTx1rHm8j
 
 See you soon!
 
-The Bike Kitchen Team`,
+The Bike Kitchen UvA Team`,
           html: `<p>Dear ${userInfo.name},</p>
 
-<p>Thank you for booking an appointment with the Bike Kitchen!</p>
+<p>Thank you for booking an appointment with the Bike Kitchen UvA!</p>
 
 <h3>Your booking details:</h3>
 <ul>
@@ -88,15 +92,19 @@ The Bike Kitchen Team`,
   <li><strong>Estimated repair time:</strong> ${bookingDetails.time || 'Not specified'} minutes</li>
 </ul>
 
-<p>We're excited to help you with your bike and contribute to a more sustainable future. Remember, the Bike Kitchen is all about empowering you to repair and maintain your own bicycle, reducing waste and promoting self-sufficiency.</p>
+<p>We're excited to help you with your bike and contribute to a more sustainable future. Remember, the Bike Kitchen UvA is all about empowering you to repair and maintain your own bicycle, reducing waste and promoting self-sufficiency.</p>
+
+<p><strong>NB: If you want to replace something on your bike, you have to bring your own parts in advance.</strong></p>
 
 <p>If you need to cancel your appointment, please <a href="${cancellationLink}">click here</a>.</p>
 
-<p>If you have any questions before your appointment, please don't hesitate to reach out.</p>
+<p>For further questions: you can send an email to <a href="mailto:bikekitchenuva@gmail.com">bikekitchenuva@gmail.com</a> or reply to this mail.</p>
+
+<p>If you're interested in joining the Bike Kitchen community for monthly borrels, rideouts, workshops and other fun stuff, <a href="https://chat.whatsapp.com/DZwW84wiDGJ6hmTx1rHm8j">join our WhatsApp chat</a>.</p>
 
 <p>See you soon!</p>
 
-<p>The Bike Kitchen Team</p>`
+<p>The Bike Kitchen UvA Team</p>`
         }
       });
 
@@ -152,7 +160,7 @@ The Bike Kitchen Team`,
       ></textarea>
       <button
         onClick={handleConfirm}
-        className="bg-red-600 text-white px-4 py-2 rounded"
+        className="bg-red-600 text-white px-4 py-2 rounded mb-4"
         disabled={isSubmitting}
       >
         {isSubmitting ? 'Confirming...' : 'Confirm'}

@@ -1,7 +1,7 @@
 // src/config/decisionTreeConfig.js
 
 const decisionTreeConfig = {
-    question: "Select Bike Type",
+    question: "What type of bike do you have?",
     options: {
       "City Bike": {
         question: "What do you need help with?",
@@ -57,7 +57,7 @@ const decisionTreeConfig = {
             }
           },
           "Gears": {
-            question: "Select Gears Category",
+            question: "What type of gear system does your bike have?",
             options: {
               "Hub": {
                 question: "What type of hub gear does your bike have?",
@@ -68,7 +68,7 @@ const decisionTreeConfig = {
                   "No Chainguard": { summary: "summary", time: 45 }
                 }
               },
-              "Derailleur": { summary: "summary", time: 40 }
+              "Derailleur": { summary: "summary", time: 40 },
             }
           },
           "Brakes": {
@@ -141,7 +141,7 @@ const decisionTreeConfig = {
             }
           },
           "Gears": {
-            question: "Select Gears Category",
+            question: "What type of gear system does your bike have?",
             options: {
               "Hub": {
                 question: "What type of hub gear does your bike have?",
@@ -152,7 +152,7 @@ const decisionTreeConfig = {
                   "No Chainguard": { summary: "summary", time: 50 }
                 }
               },
-              "Derailleur": { summary: "summary", time: 40 }
+              "Derailleur": { summary: "summary", time: 40 },
             }
           },
           "Brakes": {

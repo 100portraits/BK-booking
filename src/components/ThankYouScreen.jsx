@@ -56,10 +56,29 @@ const ThankYouScreen = () => {
         <p><strong>Estimated repair time:</strong> {bookingDetails.time || 'Not specified'} minutes</p>
         <p className="text-lg mt-4">With the new booking system, you are our <strong>{newSystemNumber}</strong> customer!</p>
         <p className="text-lg mb-4">You are our <strong>{totalCustomerNumber}</strong> total customer!</p>
-        {/* <p className="text-lg mb-4">You've contributed to saving <strong>{wasteSaved}kg</strong> of waste!</p> */}
-        <a href="https://bikekitchen.nl" className="text-red-600 underline" target="_blank" rel="noopener noreferrer">
-          Visit Bike Kitchen Website
-        </a>
+        
+        <p className="mb-4 text-red-600 font-semibold">
+          NB: If you want to replace something on your bike, you have to bring your own parts in advance.
+        </p>
+        
+        <div className="mt-6 text-center">
+          <p className="mb-2">Interested in joining the Bike Kitchen community?</p>
+          <p>Join us for monthly borrels, rideouts, workshops and other fun stuff!</p>
+          <a 
+            href="https://chat.whatsapp.com/DZwW84wiDGJ6hmTx1rHm8j" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-block mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
+          >
+            Join our WhatsApp chat
+          </a>
+        </div>
+        
+        <div className="mt-6">
+          <a href="https://bikekitchen.nl" className="text-red-600 underline" target="_blank" rel="noopener noreferrer">
+            Visit Bike Kitchen Website
+          </a>
+        </div>
       </div>  
     </div>
   );

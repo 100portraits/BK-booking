@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import decisionTreeConfig from '../config/decisionTreeConfig';
+// import decisionTreeConfigNL from '../config/decisionTreeConfigNL';
 import OptionButton from './OptionButton';
 
 const BookingProcessScreen = () => {
   const navigate = useNavigate();
+  // const [language, setLanguage] = useState('en');
   const [currentNode, setCurrentNode] = useState(decisionTreeConfig);
   const [selections, setSelections] = useState({});
   const [inputValue, setInputValue] = useState('');
@@ -24,6 +26,13 @@ const BookingProcessScreen = () => {
       window.removeEventListener('popstate', handlePopState);
     };
   }, []);
+
+  // Commented out language change effect
+  // useEffect(() => {
+  //   setCurrentNode(language === 'en' ? decisionTreeConfig : decisionTreeConfigNL);
+  //   setHistory([]);
+  //   setSelections({});
+  // }, [language]);
 
   const goBack = () => {
     if (history.length > 0) {
@@ -89,17 +98,17 @@ const BookingProcessScreen = () => {
     setSelections(newSelections);
     sessionStorage.setItem('bookingSelection', JSON.stringify(newSelections));
 
-    if (currentNode.options && currentNode.options["Don't know"]) {
+    // Check if the current question is "What do you need help with?"
+    if (currentNode.question === "What do you need help with?") {
+      // If so, skip directly to the disclaimer screen
+      sessionStorage.setItem('dontKnowSelected', 'true');
+      navigate('/disclaimer');
+    } else if (currentNode.options && currentNode.options["Don't know"]) {
       handleOptionClick("Don't know");
     } else {
-      // Move to the next question or summary
-      const nextOption = Object.values(currentNode.options)[0];
-      if (typeof nextOption === 'string' && nextOption === 'summary') {
-        sessionStorage.setItem('dontKnowSelected', true);
-        navigate('/userinfo');
-      } else {
-        setCurrentNode(nextOption);
-      }
+      // If there are no more options or we're at the last step, go to summary
+      sessionStorage.setItem('dontKnowSelected', 'true');
+      navigate('/userinfo');
     }
   };
 
@@ -122,9 +131,15 @@ const BookingProcessScreen = () => {
     return !(selections['What do you need help with?'] === 'Other');
   };
 
+  // Commented out toggleLanguage function
+  // const toggleLanguage = () => {
+  //   setLanguage(prevLang => prevLang === 'en' ? 'nl' : 'en');
+  // };
+
   const renderCurrentStep = () => {
-    if (!currentNode) {
-      return <p>Loading...</p>;
+    if (!currentNode || !currentNode.question) {
+      navigate('/userinfo'); // Redirect to summary if currentNode is invalid
+      return null;
     }
 
     if (currentNode.input) {
@@ -183,8 +198,17 @@ const BookingProcessScreen = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-red-300 p-4">
-      <div className='bg-white p-4 rounded shadow-md '>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-red-300 p-4 relative">
+      {/* Commented out language toggle button */}
+      {/* <div className="absolute top-4 right-4">
+        <button
+          onClick={toggleLanguage}
+          className="text-xs bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 rounded-full shadow"
+        >
+          {language === 'en' ? 'NL' : 'EN'}
+        </button>
+      </div> */}
+      <div className='bg-white p-6 rounded shadow-md'>
         <div className="w-full max-w-md text-center">
           {history.length > 0 && (
             <button
