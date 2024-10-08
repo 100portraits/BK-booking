@@ -74,6 +74,17 @@ const AcceptanceScreen = () => {
       >
         Let's make an appointment!
       </button>
+      <p className="mt-4 text-sm text-gray-600 text-center">
+        By proceeding, you agree to the{' '}
+        <a 
+          href="https://www.uva.nl/home/disclaimers/privacy.html" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-red-700 hover:underline"
+        >
+          UvA Privacy Policy
+        </a>.
+      </p>
       </div>
     </div>
   );
