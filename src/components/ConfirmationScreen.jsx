@@ -66,6 +66,7 @@ Thank you for booking an appointment with the Bike Kitchen UvA!
 Your booking details:
 Date: ${new Date(bookingDetails.selectedDate).toLocaleDateString()}
 Time: ${bookingDetails.selectedTime}
+Location: Bike garage of the UvA Roeterseilandcampus
 Estimated repair time: ${bookingDetails.time || 'Not specified'} minutes
 
 We're excited to help you with your bike and contribute to a more sustainable future. Remember, the Bike Kitchen UvA is all about empowering you to repair and maintain your own bicycle, reducing waste and promoting self-sufficiency.
@@ -89,6 +90,7 @@ The Bike Kitchen UvA Team`,
 <ul>
   <li><strong>Date:</strong> ${new Date(bookingDetails.selectedDate).toLocaleDateString()}</li>
   <li><strong>Time:</strong> ${bookingDetails.selectedTime}</li>
+  <li><strong>Location:</strong> Bike garage of the UvA Roeterseilandcampus</li>
   <li><strong>Estimated repair time:</strong> ${bookingDetails.time || 'Not specified'} minutes</li>
 </ul>
 

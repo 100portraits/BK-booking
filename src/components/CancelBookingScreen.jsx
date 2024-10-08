@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { collection, query, where, getDocs, deleteDoc, doc, updateDoc, Timestamp } from 'firebase/firestore';
+import { collection, query, where, getDocs, deleteDoc, doc, updateDoc, Timestamp, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const CancelBookingScreen = () => {
@@ -47,6 +47,9 @@ const CancelBookingScreen = () => {
 
         await Promise.all(updatePromises);
 
+        // Send cancellation email
+        await sendCancellationEmail(bookingData);
+
         setIsLoading(false);
       } catch (error) {
         console.error('Error cancelling booking:', error);
@@ -57,6 +60,45 @@ const CancelBookingScreen = () => {
 
     fetchBookingAndCancel();
   }, [token]);
+
+  const sendCancellationEmail = async (bookingData) => {
+    const mailRef = collection(db, 'mail');
+    await addDoc(mailRef, {
+      to: bookingData.userInfo.email,
+      message: {
+        subject: "Your Bike Kitchen UvA appointment has been cancelled",
+        text: `Dear ${bookingData.userInfo.name},
+
+Your appointment with Bike Kitchen UvA has been successfully cancelled.
+
+Cancelled appointment details:
+Date: ${new Date(bookingData.timestamp.toDate()).toLocaleDateString()}
+Time: ${new Date(bookingData.timestamp.toDate()).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+
+If you need to make a new booking, please visit our website: https://bikekitchen.nl
+
+Thank you for using Bike Kitchen UvA.
+
+Best regards,
+The Bike Kitchen UvA Team`,
+        html: `<p>Dear ${bookingData.userInfo.name},</p>
+
+<p>Your appointment with Bike Kitchen UvA has been successfully cancelled.</p>
+
+<h3>Cancelled appointment details:</h3>
+<ul>
+  <li><strong>Date:</strong> ${new Date(bookingData.timestamp.toDate()).toLocaleDateString()}</li>
+  <li><strong>Time:</strong> ${new Date(bookingData.timestamp.toDate()).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</li>
+</ul>
+
+<p>If you need to make a new booking, please visit our website: <a href="https://bikekitchen.nl">https://bikekitchen.nl</a></p>
+
+<p>Thank you for using Bike Kitchen UvA.</p>
+
+<p>Best regards,<br>The Bike Kitchen UvA Team</p>`
+      }
+    });
+  };
 
   if (isLoading) {
     return (

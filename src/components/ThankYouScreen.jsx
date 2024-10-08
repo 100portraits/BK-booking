@@ -53,7 +53,9 @@ const ThankYouScreen = () => {
         <p className="text-lg mb-4">Your appointment is confirmed for:</p>
         <p><strong>Date:</strong> {new Date(bookingDetails.selectedDate).toLocaleDateString()}</p>
         <p><strong>Time:</strong> {bookingDetails.selectedTime}</p>
+        <p><strong>Location:</strong> Bike garage of the UvA Roeterseilandcampus</p>
         <p><strong>Estimated repair time:</strong> {bookingDetails.time || 'Not specified'} minutes</p>
+        
         <p className="text-lg mt-4">With the new booking system, you are our <strong>{newSystemNumber}</strong> customer!</p>
         <p className="text-lg mb-4">You are our <strong>{totalCustomerNumber}</strong> total customer!</p>
         
@@ -70,7 +72,7 @@ const ThankYouScreen = () => {
             rel="noopener noreferrer"
             className="inline-block mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
           >
-            Join our WhatsApp chat
+            Join the community!
           </a>
         </div>
         
