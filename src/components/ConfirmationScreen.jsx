@@ -69,7 +69,7 @@ Time: ${bookingDetails.selectedTime}
 Location: Bike garage of the UvA Roeterseilandcampus
 Estimated repair time: ${bookingDetails.time || 'Not specified'} minutes
 
-We're excited to help you with your bike and contribute to a more sustainable future. Remember, the Bike Kitchen UvA is all about empowering you to repair and maintain your own bicycle, reducing waste and promoting self-sufficiency.
+The repair could take longer than the estimated time, the most important thing is learning (and safety)!
 
 NB: If you want to replace something on your bike, you have to bring your own parts in advance.
 
@@ -94,7 +94,7 @@ The Bike Kitchen UvA Team`,
   <li><strong>Estimated repair time:</strong> ${bookingDetails.time || 'Not specified'} minutes</li>
 </ul>
 
-<p>We're excited to help you with your bike and contribute to a more sustainable future. Remember, the Bike Kitchen UvA is all about empowering you to repair and maintain your own bicycle, reducing waste and promoting self-sufficiency.</p>
+<p><em>The repair could take longer than the estimated time, the most important thing is learning (and safety)!</em></p>
 
 <p><strong>NB: If you want to replace something on your bike, you have to bring your own parts in advance.</strong></p>
 
@@ -153,6 +153,9 @@ The Bike Kitchen UvA Team`,
         <p><strong>Time:</strong> {bookingDetails.selectedTime}</p>
         <p><strong>Estimated repair time:</strong> {bookingDetails.time || 'Not specified'} minutes</p>
       </div>
+      <p className="text-sm text-gray-600 mb-4 italic w-fit">
+        The repair could take longer than the estimated time<br></br>The most important thing is learning (and safety)!
+      </p>
       <textarea
         placeholder="Additional questions or messages"
         value={additionalMessage}
