@@ -30,6 +30,12 @@ const CancelBookingScreen = () => {
         // Delete the appointment
         await deleteDoc(doc(db, 'appointments', bookingDoc.id));
 
+        // Add the canceled appointment to the deletedAppointments collection
+        await addDoc(collection(db, 'deletedAppointments'), {
+          ...bookingData,
+          cancelledAt: Timestamp.now() // Store the cancellation timestamp
+        });
+
         // Update the availableSlots to mark them as available again
         const startTime = bookingData.timestamp.toDate();
         const endTime = new Date(startTime.getTime() + (bookingData.estimatedTime * 60000));
@@ -49,6 +55,16 @@ const CancelBookingScreen = () => {
 
         // Send cancellation email
         await sendCancellationEmail(bookingData);
+
+        // Check if the appointment is less than 24 hours away
+        const currentTime = new Date();
+        const timeDifference = startTime - currentTime;
+
+        if (timeDifference < 24 * 60 * 60 * 1000) {
+          setError('We understand that plans can change, but we kindly ask that you do not cancel your appointment less than 24 hours in advance, as we value everyone who comes to their appointments in our busy space. If you need assistance, please email us at bikekitchenuva@gmail.com.');
+          setIsLoading(false);
+          return;
+        }
 
         setIsLoading(false);
       } catch (error) {
