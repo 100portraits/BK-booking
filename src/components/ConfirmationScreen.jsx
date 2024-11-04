@@ -66,7 +66,7 @@ Thank you for booking an appointment with the Bike Kitchen UvA!
 Your booking details:
 Date: ${new Date(bookingDetails.selectedDate).toLocaleDateString()}
 Time: ${bookingDetails.selectedTime}
-Location: Bike garage of the UvA Roeterseilandcampus
+Location: Bike garage of the UvA Roeterseilandcampus (building B/C/D)
 Estimated repair time: ${bookingDetails.time || 'Not specified'} minutes
 
 The repair could take longer than the estimated time, the most important thing is learning (and safety)!
@@ -90,7 +90,7 @@ The Bike Kitchen UvA Team`,
 <ul>
   <li><strong>Date:</strong> ${new Date(bookingDetails.selectedDate).toLocaleDateString()}</li>
   <li><strong>Time:</strong> ${bookingDetails.selectedTime}</li>
-  <li><strong>Location:</strong> Bike garage of the UvA Roeterseilandcampus</li>
+  <li><strong>Location:</strong> Bike garage of the UvA Roeterseilandcampus (building B/C/D)</li>
   <li><strong>Estimated repair time:</strong> ${bookingDetails.time || 'Not specified'} minutes</li>
 </ul>
 

@@ -31,7 +31,7 @@ const CancelBookingScreen = () => {
 
         // Check if the appointment is less than 8 hours away
         if (timeDifference < 8 * 60 * 60 * 1000) {
-          setError('We understand that plans can change, but we kindly ask that you do not cancel your appointment less than 24 hours in advance, as we value everyone who comes to their appointments in our busy space. If you need assistance, please email us at bikekitchenuva@gmail.com.');
+          setError('We understand that plans can change, but we kindly ask that you do not cancel your appointment less than 8 hours in advance, as we value everyone who comes to their appointments in our busy space. If you need assistance, please email us at bikekitchenuva@gmail.com.');
           setIsLoading(false);
           return;
         }
