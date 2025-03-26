@@ -10,6 +10,7 @@ const ConfirmationScreen = () => {
   const [bookingDetails, setBookingDetails] = useState(null);
   const [additionalMessage, setAdditionalMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMember, setIsMember] = useState(null);
   
   useEffect(() => {
     const finalBooking = JSON.parse(sessionStorage.getItem('finalBooking'));
@@ -19,6 +20,11 @@ const ConfirmationScreen = () => {
   }, []);
 
   const handleConfirm = async () => {
+    if (isMember === null) {
+      alert('Please select whether you are a member or not');
+      return;
+    }
+    
     setIsSubmitting(true);
     try {
       // Fetch number of previous bookings to calculate customer number
@@ -44,8 +50,9 @@ const ConfirmationScreen = () => {
         additionalMessage,
         customerNumber,
         wasteSaved,
-        estimatedTime: bookingDetails.time || 'Not specified', // Use bookingDetails.time here
-        cancellationToken, // Add this line
+        estimatedTime: bookingDetails.time || 'Not specified',
+        cancellationToken,
+        member: isMember,
       };
 
       const docRef = await addDoc(appointmentsRef, bookingData);
@@ -156,13 +163,54 @@ The Bike Kitchen UvA Team`,
       <p className="text-sm text-gray-600 mb-4 italic w-fit">
         The repair could take longer than the estimated time<br></br>The most important thing is learning (and safety)!
       </p>
-      <textarea
-        placeholder="Additional questions or messages"
-        value={additionalMessage}
-        onChange={(e) => setAdditionalMessage(e.target.value)}
-        className="w-full max-w-md p-2 mb-4 border rounded"
-        rows="4"
-      ></textarea>
+      
+      <div className="mb-4">
+        <p className="font-semibold mb-2">Are you a member? *</p>
+        <div className="flex gap-4">
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="member"
+              value={true}
+              checked={isMember === true}
+              onChange={(e) => setIsMember(e.target.value === 'true')}
+              className="mr-2"
+              required
+            />
+            Yes
+          </label>
+          <label className="flex items-center">
+            <input
+              type="radio"
+              name="member"
+              value={false}
+              checked={isMember === false}
+              onChange={(e) => setIsMember(e.target.value === 'true')}
+              className="mr-2"
+              required
+            />
+            No
+          </label>
+        </div>
+        {isMember === false && (
+          <div className="mt-2 text-sm text-gray-600 bg-yellow-50 p-3 rounded border border-yellow-200">
+            <p>Non-members pay €5 to use the space. Members pay €4 per month for free use.</p>
+            <p className="mt-1">
+              <a 
+                href="https://doneren.auf.nl/bike-kitchen" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-red-600 hover:text-red-800 underline"
+              >
+                Click here to become a member
+              </a>
+            </p>
+          </div>
+        )}
+      </div>
+
+      
+      
       <button
         onClick={handleConfirm}
         className="bg-red-600 text-white px-4 py-2 rounded mb-4"
