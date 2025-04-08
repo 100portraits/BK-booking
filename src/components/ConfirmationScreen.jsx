@@ -165,7 +165,8 @@ The Bike Kitchen UvA Team`,
       </p>
       
       <div className="mb-4">
-        <p className="font-semibold mb-2">Are you a member? *</p>
+        <p className="font-semibold mb-2">Are you a (paying) member? *</p>
+        <p className="text-sm text-gray-600 mb-4  w-fit"><a href="https://doneren.auf.nl/bike-kitchen" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:text-red-800 underline">Sign in here to become a member (€4/month)</a></p>
         <div className="flex gap-4">
           <label className="flex items-center">
             <input
@@ -194,17 +195,8 @@ The Bike Kitchen UvA Team`,
         </div>
         {isMember === false && (
           <div className="mt-2 text-sm text-gray-600 bg-yellow-50 p-3 rounded border border-yellow-200">
-            <p>Non-members pay €5 to use the space. Members pay €4 per month for free use.</p>
-            <p className="mt-1">
-              <a 
-                href="https://doneren.auf.nl/bike-kitchen" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-red-600 hover:text-red-800 underline"
-              >
-                Click here to become a member
-              </a>
-            </p>
+            <p>Non-members pay €5 to use the space. Members use the space for free.</p>
+            
           </div>
         )}
       </div>
