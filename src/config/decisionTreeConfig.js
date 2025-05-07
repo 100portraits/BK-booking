@@ -19,20 +19,8 @@ const decisionTreeConfig = {
               "Back": {
                 question: "What do you need to repair?",
                 options: {
-                  "Inner Tube": {
-                    question: "Does your bike have a chainguard?",
-                    options: {
-                      "Chainguard": { summary: "summary", time: 45 },
-                      "No Chainguard": { summary: "summary", time: 35 }
-                    }
-                  },
-                  "Outer Tire": {
-                    question: "Does your bike have a chainguard?",
-                    options: {
-                      "Chainguard": { summary: "summary", time: 45 },
-                      "No Chainguard": { summary: "summary", time: 35 }
-                    }
-                  }
+                  "Inner Tube": { summary: "summary", time: 40 },
+                  "Outer Tire": { summary: "summary", time: 40 }
                 }
               }
             }
@@ -40,35 +28,15 @@ const decisionTreeConfig = {
           "Chain": {
             question: "What do you need to do with the chain?",
             options: {
-              "Tightening Chain": {
-                question: "Does your bike have a chainguard?",
-                options: {
-                  "Chainguard": { summary: "summary", time: 30 },
-                  "No Chainguard": { summary: "summary", time: 20 }
-                }
-              },
-              "Replacing Chain": {
-                question: "Does your bike have a chainguard?",
-                options: {
-                  "Chainguard": { summary: "summary", time: 40 },
-                  "No Chainguard": { summary: "summary", time: 30 }
-                }
-              }
+              "Tightening Chain": { summary: "summary", time: 25 },
+              "Replacing Chain": { summary: "summary", time: 35 }
             }
           },
           "Gears": {
             question: "What type of gear system does your bike have?",
             options: {
-              "Hub": {
-                question: "What type of hub gear does your bike have?",
-                input: true,
-                placeholder: "e.g., Nexus 7, Nexus 3 (leave empty if unsure)",
-                options: {
-                  "Chainguard": { summary: "summary", time: 55 },
-                  "No Chainguard": { summary: "summary", time: 45 }
-                }
-              },
-              "Derailleur": { summary: "summary", time: 40 },
+              "Hub": { summary: "summary", time: 50 },
+              "Derailleur": { summary: "summary", time: 40 }
             }
           },
           "Brakes": {
@@ -96,27 +64,15 @@ const decisionTreeConfig = {
               "Front": {
                 question: "What do you need to repair?",
                 options: {
-                  "Inner Tube (please bring your own)": { summary: "summary", time: 25 },
+                  "Inner Tube": { summary: "summary", time: 25 },
                   "Outer Tire": { summary: "summary", time: 35 }
                 }
               },
               "Back": {
                 question: "What do you need to repair?",
                 options: {
-                  "Inner Tube": {
-                    question: "Does your bike have a chainguard?",
-                    options: {
-                      "Chainguard": { summary: "summary", time: 40 },
-                      "No Chainguard": { summary: "summary", time: 30 }
-                    }
-                  },
-                  "Outer Tire": {
-                    question: "Does your bike have a chainguard?",
-                    options: {
-                      "Chainguard": { summary: "summary", time: 40 },
-                      "No Chainguard": { summary: "summary", time: 30 }
-                    }
-                  }
+                  "Inner Tube": { summary: "summary", time: 35 },
+                  "Outer Tire": { summary: "summary", time: 35 }
                 }
               }
             }
@@ -124,35 +80,15 @@ const decisionTreeConfig = {
           "Chain": {
             question: "What do you need to do with the chain?",
             options: {
-              "Tightening Chain": {
-                question: "Does your bike have a chainguard?",
-                options: {
-                  "Chainguard": { summary: "summary", time: 30 },
-                  "No Chainguard": { summary: "summary", time: 20 }
-                }
-              },
-              "Replacing Chain": {
-                question: "Does your bike have a chainguard?",
-                options: {
-                  "Chainguard": { summary: "summary", time: 45 },
-                  "No Chainguard": { summary: "summary", time: 35 }
-                }
-              }
+              "Tightening Chain": { summary: "summary", time: 25 },
+              "Replacing Chain": { summary: "summary", time: 40 }
             }
           },
           "Gears": {
             question: "What type of gear system does your bike have?",
             options: {
-              "Hub": {
-                question: "What type of hub gear does your bike have?",
-                input: true,
-                placeholder: "e.g., Nexus 7, Nexus 3 (leave empty if unsure)",
-                options: {
-                  "Chainguard": { summary: "summary", time: 60 },
-                  "No Chainguard": { summary: "summary", time: 50 }
-                }
-              },
-              "Derailleur": { summary: "summary", time: 40 },
+              "Hub": { summary: "summary", time: 55 },
+              "Derailleur": { summary: "summary", time: 40 }
             }
           },
           "Brakes": {

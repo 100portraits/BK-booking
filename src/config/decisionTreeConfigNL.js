@@ -19,20 +19,8 @@ const decisionTreeConfigNL = {
               "Achter": {
                 question: "Wat moet er gerepareerd worden?",
                 options: {
-                  "Binnenband": {
-                    question: "Heeft je fiets een kettingkast?",
-                    options: {
-                      "Kettingkast": { summary: "summary", time: 45 },
-                      "Geen kettingkast": { summary: "summary", time: 35 }
-                    }
-                  },
-                  "Buitenband": {
-                    question: "Heeft je fiets een kettingkast?",
-                    options: {
-                      "Kettingkast": { summary: "summary", time: 45 },
-                      "Geen kettingkast": { summary: "summary", time: 35 }
-                    }
-                  }
+                  "Binnenband": { summary: "summary", time: 40 },
+                  "Buitenband": { summary: "summary", time: 40 }
                 }
               }
             }
@@ -40,34 +28,14 @@ const decisionTreeConfigNL = {
           "Ketting": {
             question: "Wat moet er met de ketting gebeuren?",
             options: {
-              "Ketting spannen": {
-                question: "Heeft je fiets een kettingkast?",
-                options: {
-                  "Kettingkast": { summary: "summary", time: 30 },
-                  "Geen kettingkast": { summary: "summary", time: 20 }
-                }
-              },
-              "Ketting vervangen": {
-                question: "Heeft je fiets een kettingkast?",
-                options: {
-                  "Kettingkast": { summary: "summary", time: 40 },
-                  "Geen kettingkast": { summary: "summary", time: 30 }
-                }
-              }
+              "Ketting spannen": { summary: "summary", time: 25 },
+              "Ketting vervangen": { summary: "summary", time: 35 }
             }
           },
           "Versnellingen": {
             question: "Welk type versnellingssysteem heeft je fiets?",
             options: {
-              "Naaf": {
-                question: "Welk type naafversnelling heeft je fiets?",
-                input: true,
-                placeholder: "bijv. Nexus 7, Nexus 3 (laat leeg indien onzeker)",
-                options: {
-                  "Kettingkast": { summary: "summary", time: 55 },
-                  "Geen kettingkast": { summary: "summary", time: 45 }
-                }
-              },
+              "Naaf": { summary: "summary", time: 50 },
               "Derailleur": { summary: "summary", time: 40 }
             }
           },
@@ -96,27 +64,15 @@ const decisionTreeConfigNL = {
               "Voor": {
                 question: "Wat moet er gerepareerd worden?",
                 options: {
-                  "Binnenband (breng je eigen band mee)": { summary: "summary", time: 25 },
+                  "Binnenband": { summary: "summary", time: 25 },
                   "Buitenband": { summary: "summary", time: 35 }
                 }
               },
               "Achter": {
                 question: "Wat moet er gerepareerd worden?",
                 options: {
-                  "Binnenband": {
-                    question: "Heeft je fiets een kettingkast?",
-                    options: {
-                      "Kettingkast": { summary: "summary", time: 40 },
-                      "Geen kettingkast": { summary: "summary", time: 30 }
-                    }
-                  },
-                  "Buitenband": {
-                    question: "Heeft je fiets een kettingkast?",
-                    options: {
-                      "Kettingkast": { summary: "summary", time: 40 },
-                      "Geen kettingkast": { summary: "summary", time: 30 }
-                    }
-                  }
+                  "Binnenband": { summary: "summary", time: 35 },
+                  "Buitenband": { summary: "summary", time: 35 }
                 }
               }
             }
@@ -124,34 +80,14 @@ const decisionTreeConfigNL = {
           "Ketting": {
             question: "Wat moet er met de ketting gebeuren?",
             options: {
-              "Ketting spannen": {
-                question: "Heeft je fiets een kettingkast?",
-                options: {
-                  "Kettingkast": { summary: "summary", time: 30 },
-                  "Geen kettingkast": { summary: "summary", time: 20 }
-                }
-              },
-              "Ketting vervangen": {
-                question: "Heeft je fiets een kettingkast?",
-                options: {
-                  "Kettingkast": { summary: "summary", time: 45 },
-                  "Geen kettingkast": { summary: "summary", time: 35 }
-                }
-              }
+              "Ketting spannen": { summary: "summary", time: 25 },
+              "Ketting vervangen": { summary: "summary", time: 40 }
             }
           },
           "Versnellingen": {
             question: "Welk type versnellingssysteem heeft je fiets?",
             options: {
-              "Naaf": {
-                question: "Welk type naafversnelling heeft je fiets?",
-                input: true,
-                placeholder: "bijv. Nexus 7, Nexus 3 (laat leeg indien onzeker)",
-                options: {
-                  "Kettingkast": { summary: "summary", time: 60 },
-                  "Geen kettingkast": { summary: "summary", time: 50 }
-                }
-              },
+              "Naaf": { summary: "summary", time: 55 },
               "Derailleur": { summary: "summary", time: 40 }
             }
           },
