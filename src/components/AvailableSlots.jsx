@@ -30,27 +30,30 @@ const AvailableSlots = ({ selectedDate, onTimeSelect }) => {
             .sort((a, b) => a.timestamp - b.timestamp);
 
           const bookingSelection = JSON.parse(sessionStorage.getItem('bookingSelection'));
-          const requiredSlots = Math.ceil(bookingSelection.time / 30);
+          const requiredSlots = 1; // All bookings take one 30-min slot in the DB
 
-          const availableConsecutiveSlots = [];
-          for (let i = 0; i < slots.length - requiredSlots + 1; i++) {
-            let consecutive = true;
-            for (let j = 0; j < requiredSlots; j++) {
-              if (slots[i + j].booked) {
-                consecutive = false;
-                break;
-              }
-            }
-            if (consecutive) {
-              availableConsecutiveSlots.push({
+          const availableForBooking = [];
+          for (let i = 0; i < slots.length; i++) {
+            if (!slots[i].booked) {
+              availableForBooking.push({
                 ...slots[i],
-                endTime: new Date(slots[i].timestamp.getTime() + requiredSlots * 30 * 60000)
+                // Displayed end time on button should be 30 mins from start
+                endTime: new Date(slots[i].timestamp.getTime() + 30 * 60000)
               });
             }
           }
 
-          setAvailableSlots(availableConsecutiveSlots);
-          setAllBooked(slots.length > 0 && availableConsecutiveSlots.length === 0);
+          let finalDisplaySlots = availableForBooking;
+          // If estimated time > 30 mins, prevent booking the absolute last slot of the day.
+          if (bookingSelection && bookingSelection.time > 30 && availableForBooking.length > 0 && slots.length > 0) {
+            const lastOverallSlotTimestamp = slots[slots.length - 1].timestamp.getTime();
+            finalDisplaySlots = availableForBooking.filter(slot => {
+              return !(slot.timestamp.getTime() === lastOverallSlotTimestamp);
+            });
+          }
+
+          setAvailableSlots(finalDisplaySlots);
+          setAllBooked(slots.length > 0 && finalDisplaySlots.length === 0);
           setError('');
         } catch (error) {
           console.error("Error fetching available slots: ", error);

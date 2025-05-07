@@ -118,13 +118,45 @@ The Bike Kitchen UvA Team`,
       });
 
       // Update the availableSlots collection to mark the slots as booked
-      const startTime = new Date(bookingDetails.selectedDate);
-      const endTime = new Date(startTime.getTime() + (bookingDetails.time * 60000)); // Convert minutes to milliseconds
+      const baseDateFromSelectedDate = new Date(bookingDetails.selectedDate);
+      const timeString = bookingDetails.selectedTime; // Expected "HH:mm"
+
+      if (!timeString || !timeString.includes(':')) {
+        console.error("ConfirmationScreen: Invalid time format in bookingDetails.selectedTime:", timeString);
+        throw new Error("Invalid time format for slot booking. Expected HH:mm.");
+      }
+      
+      const timeParts = timeString.split(':');
+      const hours = parseInt(timeParts[0], 10);
+      const minutes = parseInt(timeParts[1], 10);
+
+      if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+        console.error("ConfirmationScreen: Parsed invalid hours/minutes from timeString:", timeString, "-> H:", hours, "M:", minutes);
+        throw new Error("Invalid time values parsed for slot booking.");
+      }
+      
+      const slotStartDateTime = new Date(
+        baseDateFromSelectedDate.getFullYear(),
+        baseDateFromSelectedDate.getMonth(),
+        baseDateFromSelectedDate.getDate(),
+        hours,
+        minutes,
+        0, // seconds
+        0  // milliseconds
+      );
+
+      if (isNaN(slotStartDateTime.getTime())) {
+          console.error("ConfirmationScreen: Failed to construct valid slotStartDateTime. BaseDate:", baseDateFromSelectedDate, "TimeStr:", timeString, "H:", hours, "M:", minutes);
+          throw new Error("Constructed an invalid date/time for slot booking.");
+      }
+
+      const selectedSlotStartTime = slotStartDateTime;
+      const slotToEndTime = new Date(selectedSlotStartTime.getTime() + 30 * 60000); // 30 minutes later
 
       const slotsQuery = query(
         collection(db, 'availableSlots'),
-        where('timestamp', '>=', Timestamp.fromDate(startTime)),
-        where('timestamp', '<', Timestamp.fromDate(endTime))
+        where('timestamp', '>=', Timestamp.fromDate(selectedSlotStartTime)),
+        where('timestamp', '<', Timestamp.fromDate(slotToEndTime))
       );
 
       const slotsSnapshot = await getDocs(slotsQuery);
